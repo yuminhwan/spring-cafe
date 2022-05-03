@@ -12,39 +12,74 @@ public class Product {
     private final LocalDateTime createdDateTime;
     private ProductName name;
     private Category category;
-    private Money money;
-    private Quantity quantity;
+    private Money price;
+    private Quantity stock;
     private String description;
     private LocalDateTime modifiedDateTime;
 
-    public Product(Long id, ProductName name, Category category, Money money, String description, Quantity quantity) {
-        this(id, name, category, money, description, quantity, LocalDateTime.now(), null);
+    public Product(String name, Category category, long price, int stock, String description) {
+        this(new ProductName(name), category, new Money(price), new Quantity(stock), description);
     }
 
-    public Product(Long id, ProductName name, Category category, Money money, String description,
-        Quantity quantity,
+    public Product(ProductName name, Category category, Money price, Quantity stock, String description) {
+        this(null, name, category, price, stock, description, LocalDateTime.now(), LocalDateTime.now());
+    }
+
+    public Product(Long id, ProductName name, Category category, Money price, Quantity stock, String description,
         LocalDateTime createdDateTime, LocalDateTime modifiedDateTime) {
         this.id = id;
         this.name = name;
         this.category = category;
-        this.money = money;
-        this.quantity = quantity;
+        this.price = price;
+        this.stock = stock;
         this.description = description;
         this.createdDateTime = createdDateTime;
         this.modifiedDateTime = modifiedDateTime;
     }
 
     public void sellProduct(int sellQuantity) {
-        this.quantity = quantity.minusQuantity(sellQuantity);
+        this.stock = stock.minusQuantity(sellQuantity);
     }
 
     public void changeInformation(ProductName productName, Category category, Money money, Quantity quantity,
         String description) {
         this.name = productName;
         this.category = category;
-        this.money = money;
-        this.quantity = quantity;
+        this.price = money;
+        this.stock = quantity;
         this.description = description;
         this.modifiedDateTime = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public ProductName getName() {
+        return name;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public Money getPrice() {
+        return price;
+    }
+
+    public Quantity getStock() {
+        return stock;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getModifiedDateTime() {
+        return modifiedDateTime;
     }
 }
