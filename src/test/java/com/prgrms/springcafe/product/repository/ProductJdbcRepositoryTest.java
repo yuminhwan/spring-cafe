@@ -79,6 +79,19 @@ class ProductJdbcRepositoryTest {
         assertThat(productRepostiory.findAll()).hasSize(2);
     }
 
+    @DisplayName("특정 카테고리의 상품을 조회한다.")
+    @Test
+    void findByCategory() {
+        // given
+        products().forEach(productRepostiory::insert);
+
+        // when
+        List<Product> products = productRepostiory.findByCategory(Category.COFFEE);
+
+        // then
+        assertThat(products).hasSize(2);
+    }
+
     @DisplayName("특정 id의 상품을 조회한다.")
     @Test
     void findById() {
