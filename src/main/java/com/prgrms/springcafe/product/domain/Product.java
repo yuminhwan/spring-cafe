@@ -2,46 +2,48 @@ package com.prgrms.springcafe.product.domain;
 
 import java.time.LocalDateTime;
 
-import com.prgrms.springcafe.product.domain.vo.Name;
-import com.prgrms.springcafe.product.domain.vo.Price;
-import com.prgrms.springcafe.product.domain.vo.Stock;
+import com.prgrms.springcafe.product.domain.vo.Money;
+import com.prgrms.springcafe.product.domain.vo.ProductName;
+import com.prgrms.springcafe.product.domain.vo.Quantity;
 
 public class Product {
 
     private final Long id;
     private final LocalDateTime createdDateTime;
-    private Name name;
+    private ProductName name;
     private Category category;
-    private Price price;
-    private Stock stock;
+    private Money money;
+    private Quantity quantity;
     private String description;
     private LocalDateTime modifiedDateTime;
 
-    public Product(Long id, Name name, Category category, Price price, String description, Stock stock) {
-        this(id, name, category, price, description, stock, LocalDateTime.now(), null);
+    public Product(Long id, ProductName name, Category category, Money money, String description, Quantity quantity) {
+        this(id, name, category, money, description, quantity, LocalDateTime.now(), null);
     }
 
-    public Product(Long id, Name name, Category category, Price price, String description, Stock stock,
+    public Product(Long id, ProductName name, Category category, Money money, String description,
+        Quantity quantity,
         LocalDateTime createdDateTime, LocalDateTime modifiedDateTime) {
         this.id = id;
         this.name = name;
         this.category = category;
-        this.price = price;
-        this.stock = stock;
+        this.money = money;
+        this.quantity = quantity;
         this.description = description;
         this.createdDateTime = createdDateTime;
         this.modifiedDateTime = modifiedDateTime;
     }
 
     public void sellProduct(int sellQuantity) {
-        this.stock = this.stock.minusStock(sellQuantity);
+        this.quantity = quantity.minusQuantity(sellQuantity);
     }
 
-    public void changeInformation(Name name, Category category, Price price, Stock stock, String description) {
-        this.name = name;
+    public void changeInformation(ProductName productName, Category category, Money money, Quantity quantity,
+        String description) {
+        this.name = productName;
         this.category = category;
-        this.price = price;
-        this.stock = stock;
+        this.money = money;
+        this.quantity = quantity;
         this.description = description;
         this.modifiedDateTime = LocalDateTime.now();
     }

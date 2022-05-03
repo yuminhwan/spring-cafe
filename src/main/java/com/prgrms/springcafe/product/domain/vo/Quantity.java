@@ -4,14 +4,14 @@ import java.util.Objects;
 
 import com.prgrms.springcafe.global.error.exception.InvalidValueException;
 
-public class Stock {
+public class Quantity {
 
     public static final String STOCK_NEGATIVE_EXCEPTION_MESSAGE = "상품 수량은 음수가 될 수 없습니다.";
     public static final int ZERO_AMOUNT = 0;
 
     private final int amount;
 
-    public Stock(int amount) {
+    public Quantity(int amount) {
         this.amount = amount;
         validateStock(amount);
     }
@@ -22,8 +22,8 @@ public class Stock {
         }
     }
 
-    public Stock minusStock(int sellAmount) {
-        return new Stock(this.amount - sellAmount);
+    public Quantity minusQuantity(int sellAmount) {
+        return new Quantity(this.amount - sellAmount);
     }
 
     public int getAmount() {
@@ -36,8 +36,8 @@ public class Stock {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        Stock stock = (Stock)o;
-        return amount == stock.amount;
+        Quantity quantity = (Quantity)o;
+        return amount == quantity.amount;
     }
 
     @Override

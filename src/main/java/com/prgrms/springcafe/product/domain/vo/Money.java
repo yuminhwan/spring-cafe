@@ -4,19 +4,19 @@ import java.util.Objects;
 
 import com.prgrms.springcafe.global.error.exception.InvalidValueException;
 
-public class Price {
-    public static final int MIN_PRICE = 1;
-    public static final String PRICE_UNDER_MIN_PRICE_EXCEPTION_MESSAGE = "가격은 1보다 작을 수 없습니다.";
+public class Money {
+    public static final int MIN_AMOUNT = 1;
+    public static final String PRICE_UNDER_MIN_PRICE_EXCEPTION_MESSAGE = "돈은 1보다 작을 수 없습니다.";
 
     private final long amount;
 
-    public Price(long amount) {
+    public Money(long amount) {
         this.amount = amount;
         validatePrice(amount);
     }
 
     private void validatePrice(long amount) {
-        if (amount < MIN_PRICE) {
+        if (amount < MIN_AMOUNT) {
             throw new InvalidValueException(PRICE_UNDER_MIN_PRICE_EXCEPTION_MESSAGE);
         }
     }
@@ -31,8 +31,8 @@ public class Price {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        Price price = (Price)o;
-        return amount == price.amount;
+        Money money = (Money)o;
+        return amount == money.amount;
     }
 
     @Override

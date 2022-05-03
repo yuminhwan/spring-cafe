@@ -4,16 +4,16 @@ import java.util.Objects;
 
 import com.prgrms.springcafe.global.error.exception.InvalidValueException;
 
-public class Name {
+public class ProductName {
 
-    private static final int MIN_LENGHT = 3;
+    private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 20;
     private static final String NAME_EMPTY_OR_BLANK_EXCEPTION_MESSAGE = "상품 이름은 반드시 존재해야 합니다.";
     private static final String WRONG_NAME_LENGTH_EXCEPTION_MESSAGE = "상품 이름은 3글자 이상 20글자 이하여야합니다.";
 
     private final String value;
 
-    public Name(String value) {
+    public ProductName(String value) {
         this.value = value;
         validateName(value);
     }
@@ -23,7 +23,7 @@ public class Name {
             throw new InvalidValueException(NAME_EMPTY_OR_BLANK_EXCEPTION_MESSAGE);
         }
 
-        if (value.length() > MAX_LENGTH || value.length() < MIN_LENGHT) {
+        if (value.length() > MAX_LENGTH || value.length() < MIN_LENGTH) {
             throw new InvalidValueException(WRONG_NAME_LENGTH_EXCEPTION_MESSAGE);
         }
     }
@@ -38,8 +38,8 @@ public class Name {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        Name name = (Name)o;
-        return value.equals(name.value);
+        ProductName productName = (ProductName)o;
+        return value.equals(productName.value);
     }
 
     @Override
