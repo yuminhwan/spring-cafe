@@ -10,6 +10,8 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 
@@ -119,6 +121,20 @@ class ProductJdbcRepositoryTest {
         // then
         assertThatCode(() -> productRepostiory.deleteById(product.getId()))
             .doesNotThrowAnyException();
+    }
+
+    @DisplayName("특정 이름으로 저장된 상품이 있는 지 확인한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"americano,true", "latte,false"})
+    void existsByName(String name, boolean result) {
+        // given
+        productRepostiory.insert(product());
+
+        // when
+        boolean isExists = productRepostiory.existsByName(name);
+
+        // then
+        assertThat(isExists).isEqualTo(result);
     }
 
     private Product product() {

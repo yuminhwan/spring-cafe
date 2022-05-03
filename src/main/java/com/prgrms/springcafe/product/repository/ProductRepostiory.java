@@ -20,4 +20,5 @@ public interface ProductRepostiory {
 
     void deleteById(Long id);
 
+    boolean existsByName(String name);
 }

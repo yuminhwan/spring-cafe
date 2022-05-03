@@ -103,6 +103,13 @@ public class ProductJdbcRepository implements ProductRepostiory {
         validateExecute(update);
     }
 
+    @Override
+    public boolean existsByName(String name) {
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(
+            "SELECT EXISTS (SELECT * FROM product WHERE product_name = :productName)",
+            Collections.singletonMap("productName", name), Boolean.class));
+    }
+
     private Map<String, Object> toParamMap(Product product) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("product_id", product.getId());
