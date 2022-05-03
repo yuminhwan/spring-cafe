@@ -17,9 +17,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 
 import com.prgrms.springcafe.product.domain.Category;
 import com.prgrms.springcafe.product.domain.Product;
-import com.prgrms.springcafe.product.domain.vo.Money;
 import com.prgrms.springcafe.product.domain.vo.ProductName;
-import com.prgrms.springcafe.product.domain.vo.Quantity;
+import com.prgrms.springcafe.product.exception.ProductNotFoundException;
 
 @JdbcTest
 class ProductJdbcRepositoryTest {
@@ -55,7 +54,7 @@ class ProductJdbcRepositoryTest {
         Product product = productRepostiory.insert(product());
 
         // when
-        product.changeInformation(new ProductName("Latte"), Category.COFFEE, new Money(20), new Quantity(10), "Latte");
+        product.changeInformation("Latte", Category.COFFEE, 20L, 10, "Latte");
         productRepostiory.update(product);
 
         // then
@@ -134,6 +133,14 @@ class ProductJdbcRepositoryTest {
         // then
         assertThatCode(() -> productRepostiory.deleteById(product.getId()))
             .doesNotThrowAnyException();
+    }
+
+    @DisplayName("존재하지 않는 상품의 Id로 상품을 제거할 수 없다.")
+    @Test
+    void deleteById_WithNotSavedId() {
+        assertThatThrownBy(() -> productRepostiory.deleteById(1L))
+            .isInstanceOf(ProductNotFoundException.class)
+            .hasMessage("Id가 1인 상품은 존재하지 않습니다.");
     }
 
     @DisplayName("특정 이름으로 저장된 상품이 있는 지 확인한다.")

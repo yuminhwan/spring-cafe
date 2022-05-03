@@ -22,10 +22,12 @@ import com.prgrms.springcafe.product.domain.Product;
 import com.prgrms.springcafe.product.domain.vo.Money;
 import com.prgrms.springcafe.product.domain.vo.ProductName;
 import com.prgrms.springcafe.product.domain.vo.Quantity;
+import com.prgrms.springcafe.product.exception.ProductNotFoundException;
 
 @Repository
 public class ProductJdbcRepository implements ProductRepostiory {
 
+    private static final int EXECUTE_VALUE = 1;
     private static final RowMapper<Product> productRowMapper = (resultSet, rowNum) -> {
         Long productId = resultSet.getLong("product_id");
         String productName = resultSet.getString("product_name");
@@ -58,12 +60,14 @@ public class ProductJdbcRepository implements ProductRepostiory {
 
     @Override
     public void update(Product product) {
-        int update = jdbcTemplate.update(
+        int updateCnt = jdbcTemplate.update(
             "UPDATE product SET product_name = :product_name, category = :category, price = :price, stock = :stock, description = :description,"
                 + " created_at = :created_at, updated_at = :updated_at WHERE product_id = :product_id",
             toParamMap(product));
 
-        validateExecute(update);
+        if (updateCnt != EXECUTE_VALUE) {
+            throw new ProductNotFoundException(product.getId());
+        }
     }
 
     @Override
@@ -104,10 +108,12 @@ public class ProductJdbcRepository implements ProductRepostiory {
 
     @Override
     public void deleteById(Long id) {
-        int update = jdbcTemplate.update("DELETE FROM product WHERE product_id = :productId",
+        int deletedCnt = jdbcTemplate.update("DELETE FROM product WHERE product_id = :productId",
             Collections.singletonMap("productId", id));
 
-        validateExecute(update);
+        if (deletedCnt != EXECUTE_VALUE) {
+            throw new ProductNotFoundException(id);
+        }
     }
 
     @Override
