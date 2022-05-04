@@ -12,10 +12,10 @@ public class Money {
 
     public Money(long amount) {
         this.amount = amount;
-        validatePrice(amount);
+        validateAmount(amount);
     }
 
-    private void validatePrice(long amount) {
+    private void validateAmount(long amount) {
         if (amount < MIN_AMOUNT) {
             throw new InvalidValueException(PRICE_UNDER_MIN_PRICE_EXCEPTION_MESSAGE);
         }
