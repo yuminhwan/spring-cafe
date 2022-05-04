@@ -4,17 +4,16 @@ import static com.prgrms.springcafe.global.utils.JdbcUtils.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.prgrms.springcafe.product.domain.Category;
@@ -42,18 +41,20 @@ public class ProductJdbcRepository implements ProductRepostiory {
     };
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final SimpleJdbcInsert simpleJdbcInsert;
 
-    public ProductJdbcRepository(DataSource dataSource) {
-        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-            .withTableName("product")
-            .usingGeneratedKeyColumns("product_id");
+    public ProductJdbcRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public Product insert(Product product) {
-        Number newId = simpleJdbcInsert.executeAndReturnKey(toParamMap(product));
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(
+            "INSERT INTO product(product_name, category, price, stock, description, created_at, updated_at) " +
+                "VALUES(:productName, :category, :price, :stock, :description, :createdAt, :updatedAt)",
+            toParameterSource(product), keyHolder, new String[] {"product_id"});
+
+        Number newId = keyHolder.getKey();
         return new Product(newId.longValue(), product.getName(), product.getCategory(), product.getPrice(),
             product.getStock(), product.getDescription(), product.getCreatedDateTime(), product.getModifiedDateTime());
     }
@@ -61,9 +62,9 @@ public class ProductJdbcRepository implements ProductRepostiory {
     @Override
     public void update(Product product) {
         int updateCnt = jdbcTemplate.update(
-            "UPDATE product SET product_name = :product_name, category = :category, price = :price, stock = :stock, description = :description,"
-                + " created_at = :created_at, updated_at = :updated_at WHERE product_id = :product_id",
-            toParamMap(product));
+            "UPDATE product SET product_name = :productName, category = :category, price = :price, stock = :stock, description = :description,"
+                + " created_at = :createdAt, updated_at = :updatedAt WHERE product_id = :productId",
+            toParameterSource(product));
 
         if (updateCnt != EXECUTE_VALUE) {
             throw new ProductNotFoundException(product.getId());
@@ -123,16 +124,15 @@ public class ProductJdbcRepository implements ProductRepostiory {
             Collections.singletonMap("productName", name), Boolean.class));
     }
 
-    private Map<String, Object> toParamMap(Product product) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("product_id", product.getId());
-        parameters.put("product_name", product.getName().getValue());
-        parameters.put("category", product.getCategory().toString());
-        parameters.put("price", product.getPrice().getAmount());
-        parameters.put("stock", product.getStock().getAmount());
-        parameters.put("description", product.getDescription());
-        parameters.put("created_at", product.getCreatedDateTime());
-        parameters.put("updated_at", product.getModifiedDateTime());
-        return parameters;
+    private SqlParameterSource toParameterSource(Product product) {
+        return new MapSqlParameterSource()
+            .addValue("productId", product.getId())
+            .addValue("productName", product.getName().getValue())
+            .addValue("category", product.getCategory().toString())
+            .addValue("price", product.getPrice().getAmount())
+            .addValue("stock", product.getStock().getAmount())
+            .addValue("description", product.getDescription())
+            .addValue("createdAt", product.getCreatedDateTime())
+            .addValue("updatedAt", product.getModifiedDateTime());
     }
 }

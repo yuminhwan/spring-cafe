@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.List;
 import java.util.Optional;
 
-import javax.sql.DataSource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,23 +12,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.prgrms.springcafe.product.domain.Category;
 import com.prgrms.springcafe.product.domain.Product;
-import com.prgrms.springcafe.product.domain.vo.ProductName;
 import com.prgrms.springcafe.product.exception.ProductNotFoundException;
 
 @JdbcTest
 class ProductJdbcRepositoryTest {
 
     @Autowired
-    private DataSource dataSource;
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
     private ProductRepostiory productRepostiory;
 
     @BeforeEach
     void setup() {
-        productRepostiory = new ProductJdbcRepository(dataSource);
+        productRepostiory = new ProductJdbcRepository(jdbcTemplate);
     }
 
     @DisplayName("상품을 저장한다.")
@@ -44,7 +42,6 @@ class ProductJdbcRepositoryTest {
 
         // then
         assertThat(newProduct.getId()).isEqualTo(1L);
-        assertThat(newProduct.getName()).isEqualTo(new ProductName("americano"));
     }
 
     @DisplayName("상품을 수정한다.")
