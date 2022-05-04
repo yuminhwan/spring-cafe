@@ -62,8 +62,7 @@ public class ProductJdbcRepository implements ProductRepostiory {
     @Override
     public void update(Product product) {
         int updateCnt = jdbcTemplate.update(
-            "UPDATE product SET product_name = :productName, category = :category, price = :price, stock = :stock, description = :description,"
-                + " created_at = :createdAt, updated_at = :updatedAt WHERE product_id = :productId",
+            "UPDATE product SET price = :price, stock = :stock, description = :description, updated_at = :updatedAt WHERE product_id = :productId",
             toParameterSource(product));
 
         if (updateCnt != EXECUTE_VALUE) {

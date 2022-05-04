@@ -80,7 +80,7 @@ class ProductServiceTest {
 
         // then
         assertThat(productResponse.getId()).isEqualTo(1L);
-        assertThat(productResponse.getName()).isEqualTo("latte");
+        assertThat(productResponse.getPrice()).isEqualTo(3000L);
         then(productRepostiory).should(times(1)).findById(1L);
         then(productRepostiory).should(times(1)).update(any(Product.class));
     }
@@ -98,22 +98,6 @@ class ProductServiceTest {
         assertThatThrownBy(() -> productService.modifyProduct(id, updateProductRequest))
             .isInstanceOf(ProductNotFoundException.class)
             .hasMessage("Id가 2인 상품은 존재하지 않습니다.");
-    }
-
-    @DisplayName("중복된 이름으로 상품을 수정할 수 없다.")
-    @Test
-    void modifyProduct_WithDuplicateName() {
-        // given
-        Product product = product();
-        given(productRepostiory.findById(product.getId())).willReturn(Optional.of(product));
-        UpdateProductRequest updateProductRequest = updateProductRequest();
-        given(productRepostiory.existsByName(updateProductRequest.getName())).willReturn(true);
-
-        // when
-        // then
-        assertThatThrownBy(() -> productService.modifyProduct(product.getId(), updateProductRequest))
-            .isInstanceOf(NameDuplicateException.class)
-            .hasMessageContaining("중복됩니다.");
     }
 
     @DisplayName("전체 상품을 조회한다.")
@@ -230,7 +214,7 @@ class ProductServiceTest {
     }
 
     private UpdateProductRequest updateProductRequest() {
-        return new UpdateProductRequest("latte", COFFEE, 3000L, 50, "latte");
+        return new UpdateProductRequest(3000L, 50, "latte");
     }
 
 }

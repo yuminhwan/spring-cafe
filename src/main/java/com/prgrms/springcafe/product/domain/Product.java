@@ -10,8 +10,8 @@ public class Product {
 
     private final Long id;
     private final LocalDateTime createdDateTime;
-    private ProductName name;
-    private Category category;
+    private final ProductName name;
+    private final Category category;
     private Money price;
     private Quantity stock;
     private String description;
@@ -45,10 +45,7 @@ public class Product {
         return this.name.isNotSame(name);
     }
 
-    public void changeInformation(String productName, Category category, long price, int stock,
-        String description) {
-        this.name = new ProductName(productName);
-        this.category = category;
+    public void changeInformation(long price, int stock, String description) {
         this.price = new Money(price);
         this.stock = new Quantity(stock);
         this.description = description;

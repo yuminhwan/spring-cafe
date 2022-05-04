@@ -51,7 +51,7 @@ class ProductJdbcRepositoryTest {
         Product product = productRepostiory.insert(product());
 
         // when
-        product.changeInformation("Latte", Category.COFFEE, 20L, 10, "Latte");
+        product.changeInformation(20L, 10, "so Delicious");
         productRepostiory.update(product);
 
         // then

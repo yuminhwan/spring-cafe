@@ -28,7 +28,7 @@ class MoneyTest {
     void should_ThrowException_MoneyIsUnderOne(long money) {
         assertThatThrownBy(() -> new Money(money))
             .isInstanceOf(InvalidValueException.class)
-            .hasMessage("가격은 1보다 작을 수 없습니다.");
+            .hasMessage("돈은 1보다 작을 수 없습니다.");
     }
 
 }

@@ -44,11 +44,7 @@ public class ProductService {
         Product product = productRepostiory.findById(id)
             .orElseThrow(() -> new ProductNotFoundException(id));
 
-        if (product.isNotSameName(productRequest.getName())) {
-            validateDuplicateName(productRequest.getName());
-        }
-        product.changeInformation(productRequest.getName(), productRequest.getCategory(), productRequest.getPrice(),
-            productRequest.getStock(), product.getDescription());
+        product.changeInformation(productRequest.getPrice(), productRequest.getStock(), product.getDescription());
         productRepostiory.update(product);
 
         return ProductResponse.from(product);
