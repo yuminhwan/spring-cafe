@@ -41,12 +41,12 @@ public class Product {
         this.stock = stock.minusQuantity(sellQuantity);
     }
 
-    public void changeInformation(ProductName productName, Category category, Money money, Quantity quantity,
+    public void changeInformation(String productName, Category category, long price, int stock,
         String description) {
-        this.name = productName;
+        this.name = new ProductName(productName);
         this.category = category;
-        this.price = money;
-        this.stock = quantity;
+        this.price = new Money(price);
+        this.stock = new Quantity(stock);
         this.description = description;
         this.modifiedDateTime = LocalDateTime.now();
     }
