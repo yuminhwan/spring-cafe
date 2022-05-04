@@ -8,4 +8,8 @@ public class ProductNotFoundException extends EntityNotFoundException {
     public ProductNotFoundException(Long id) {
         super(MessageFormat.format("Id가 {0}인 상품은 존재하지 않습니다.", id));
     }
+
+    public ProductNotFoundException(String name) {
+        super(MessageFormat.format("상품명이 {0}인 상품은 존재하지 않습니다.", name));
+    }
 }

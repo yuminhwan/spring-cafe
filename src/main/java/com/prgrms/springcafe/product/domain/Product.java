@@ -41,6 +41,10 @@ public class Product {
         this.stock = stock.minusQuantity(sellQuantity);
     }
 
+    public boolean isNotSameName(String name) {
+        return this.name.isNotSame(name);
+    }
+
     public void changeInformation(String productName, Category category, long price, int stock,
         String description) {
         this.name = new ProductName(productName);

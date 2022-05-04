@@ -28,6 +28,10 @@ public class ProductName {
         }
     }
 
+    public boolean isNotSame(String name) {
+        return !value.equals(name);
+    }
+
     public String getValue() {
         return value;
     }
