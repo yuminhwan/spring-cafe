@@ -24,7 +24,6 @@ public class CreateProductRequest {
     @Positive(message = "상품 수량은 양수여야합니다.")
     private final int stock;
 
-    @NotBlank(message = "상품 설명에 공백만 있을 수 없습니다.")
     @Length(min = 5, max = 500, message = "상품 설명은 {min}글자 이상 {max}글자 이하여야합니다.")
     private final String description;
 
