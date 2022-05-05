@@ -15,14 +15,16 @@ public class CreateProductRequest {
     @Length(min = 3, max = 20, message = "상품 이름은 {min}글자 이상 {max}글자 이하여야합니다.")
     private String name;
 
-    @NotNull(message = "카테고리는 필수로 필요합니다.")
+    @NotNull(message = "카테고리는 반드시 값이 필요합니다.")
     private Category category;
 
+    @NotNull(message = "상품 가격은 반드시 값이 필요합니다.")
     @Positive(message = "상품 가격은 양수여야합니다.")
-    private long price;
-    
+    private Long price;
+
+    @NotNull(message = "상품 수량은 반드시 값이 필요합니다.")
     @Positive(message = "상품 수량은 양수여야합니다.")
-    private int stock;
+    private Integer stock;
 
     @Length(min = 5, max = 500, message = "상품 설명은 {min}글자 이상 {max}글자 이하여야합니다.")
     private String description;
