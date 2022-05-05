@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected void handleException(HttpServletResponse response, Exception e) throws IOException {
         logger.error(e.getMessage());
-        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버에서 오류가 발생했습니다.");
     }
 
 }
