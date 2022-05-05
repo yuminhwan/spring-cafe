@@ -36,7 +36,6 @@ public class ProductController {
 
     @GetMapping("/new-product")
     public String newProductPage(Model model) {
-
         model.addAttribute("categorys", Category.toStringAll());
         model.addAttribute("product", new CreateProductRequest());
         return "new-product";
@@ -70,7 +69,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/modify/{productId}")
-    public String modifyProductDetails(@PathVariable Long productId,
+    public String modifyProduct(@PathVariable Long productId,
         @ModelAttribute("product") @Valid UpdateProductRequest productRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -82,7 +81,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/delete/{productId}")
-    public String modifyProductDetails(@PathVariable("productId") Long productId) {
+    public String deleteProduct(@PathVariable("productId") Long productId) {
         productService.removeProduct(productId);
         return "redirect:/products";
     }
