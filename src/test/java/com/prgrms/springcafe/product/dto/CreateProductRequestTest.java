@@ -28,6 +28,18 @@ class CreateProductRequestTest {
         validator = validatorFactory.getValidator();
     }
 
+    @DisplayName("상품 생성 객체를 생성한다.")
+    @Test
+    void createProductRequest() {
+        // given
+        CreateProductRequest productRequest = new CreateProductRequest("cake", COFFEE, 100L, 100, "cakeDelicious");
+
+        // when
+        // then
+        Set<ConstraintViolation<CreateProductRequest>> validate = validator.validate(productRequest);
+        assertThat(validate).isEmpty();
+    }
+
     @DisplayName("상품 이름 입력값이 빈 값, null, 글자수는 2자 미만이거나 20자 초과하면 안 된다.")
     @ParameterizedTest
     @NullAndEmptySource
