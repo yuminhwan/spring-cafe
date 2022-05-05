@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .container {
+            max-width: 560px;
+        }
+    </style>
+    <title>Spring Cafe</title>
+</head>
+<h1>Spring Cafe</h1>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>상품 등록</h2>
+    </div>
+    <form method="post" name="product" th:action="@{/products}" th:obejct="${product}">
+        <div class="mb-3">
+            <label class="form-label" for="name">상품명</label>
+            <input class="form-control" id="name" placeholder="상품명을 입력하세요" th:errorclass="field-error"
+                   th:field="*{product.name}"
+                   type="text">
+            <div class="field-error" th:errors="${product.name}">상품명 오류</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="category">카테고리</label>
+            <select class="form-control" id="category" name="category">
+                <option th:each="category : ${categorys}" th:text="${category}" th:value="${category}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="price">가격</label>
+            <input class="form-control" id="price" placeholder="가격을 입력하세요" th:errorclass="field-error"
+                   th:field="*{product.price}"
+                   type="number">
+            <div class="field-error" th:errors="${product.price}">가격 오류</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="stock">수량</label>
+            <input class="form-control" id="stock" placeholder="수량을 입력하세요" th:errorclass="field-error"
+                   th:field="*{product.stock}"
+                   type="number">
+            <div class="field-error" th:errors="${product.stock}">수량 오류</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="description">설명</label>
+            <textarea class="form-control" id="description" name="description" placeholder="상품 설명을 입력하세요."
+                      rows="3" th:errorclass="field-error" th:field="*{product.description}"></textarea>
+            <div class="field-error" th:errors="${product.description}">설명 오류</div>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit">저장</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+

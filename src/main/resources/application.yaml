@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cafe
+    username:
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  error:
+    include-message: always
