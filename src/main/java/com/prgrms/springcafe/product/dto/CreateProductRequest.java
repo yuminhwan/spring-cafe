@@ -13,19 +13,23 @@ public class CreateProductRequest {
 
     @NotBlank(message = "상품 이름에 공백만 있을 수 없습니다.")
     @Length(min = 3, max = 20, message = "상품 이름은 {min}글자 이상 {max}글자 이하여야합니다.")
-    private final String name;
+    private String name;
 
     @NotNull(message = "카테고리는 필수로 필요합니다.")
-    private final Category category;
+    private Category category;
 
     @Positive(message = "상품 가격은 양수여야합니다.")
-    private final long price;
-
+    private long price;
+    
     @Positive(message = "상품 수량은 양수여야합니다.")
-    private final int stock;
+    private int stock;
 
     @Length(min = 5, max = 500, message = "상품 설명은 {min}글자 이상 {max}글자 이하여야합니다.")
-    private final String description;
+    private String description;
+
+    public CreateProductRequest() {
+
+    }
 
     public CreateProductRequest(String name, Category category, long price, int stock, String description) {
         this.name = name;
@@ -43,19 +47,39 @@ public class CreateProductRequest {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Category getCategory() {
         return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public long getPrice() {
         return price;
     }
 
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
     public int getStock() {
         return stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

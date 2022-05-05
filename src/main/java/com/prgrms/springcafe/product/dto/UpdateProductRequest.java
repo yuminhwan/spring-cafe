@@ -8,13 +8,16 @@ import org.hibernate.validator.constraints.Length;
 public class UpdateProductRequest {
 
     @Positive(message = "상품 가격은 양수여야합니다.")
-    private final long price;
+    private Long price;
 
     @PositiveOrZero(message = "상품 수량은 0 또는 양수여야합니다.")
-    private final int stock;
+    private int stock;
 
     @Length(min = 5, max = 100, message = "상품 설명은 {min}글자 이상 {max}글자 이하여야합니다.")
-    private final String description;
+    private String description;
+
+    public UpdateProductRequest() {
+    }
 
     public UpdateProductRequest(long price, int stock, String description) {
         this.price = price;
@@ -26,11 +29,23 @@ public class UpdateProductRequest {
         return price;
     }
 
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
     public int getStock() {
         return stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
