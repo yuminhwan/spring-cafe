@@ -36,7 +36,7 @@ public class ProductService {
 
     private void validateDuplicateName(String name) {
         if (productRepostiory.existsByName(name)) {
-            throw new NameDuplicateException(MessageFormat.format("{0}은 중복됩니다.", name));
+            throw new NameDuplicateException(MessageFormat.format("입력한 상품명 {0}은 중복됩니다.", name));
         }
     }
 
