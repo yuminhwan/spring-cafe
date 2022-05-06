@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.*;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,12 @@ public class ProductService {
         productRepostiory.update(product);
 
         return ProductResponse.from(product);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductResponse> findProducts(Optional<Category> category) {
+        return category.map(this::findByCategory)
+            .orElseGet(this::findAllProducts);
     }
 
     @Transactional(readOnly = true)
