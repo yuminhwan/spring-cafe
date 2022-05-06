@@ -42,7 +42,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public String saveProduct(@ModelAttribute("product") @Valid CreateProductRequest productRequest,
+    public String createProduct(@ModelAttribute("product") @Valid CreateProductRequest productRequest,
         BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {

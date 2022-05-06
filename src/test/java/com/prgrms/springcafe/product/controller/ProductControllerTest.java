@@ -80,7 +80,7 @@ class ProductControllerTest {
         resultActions.andExpect(status().is4xxClientError());
     }
 
-    @DisplayName("상품 저장을 요청한다.")
+    @DisplayName("상품 생성을 요청한다.")
     @Test
     void saveProduct() throws Exception {
         // given
@@ -95,7 +95,7 @@ class ProductControllerTest {
             .andExpect(redirectedUrl("/products"));
     }
 
-    @DisplayName("상품 저장시 상품명이 중복될 시 에러페이지로 이동한다.")
+    @DisplayName("상품 생성시 상품명이 중복될 시 에러페이지로 이동한다.")
     @Test
     void saveProduct_WithDuplicateName() throws Exception {
         // given
@@ -122,7 +122,7 @@ class ProductControllerTest {
             .params(params));
 
         // then
-        resultActions.andExpect(status().is3xxRedirection())
+        resultActions.andExpect(status().isCreated())
             .andExpect(redirectedUrl("/products"));
     }
 
