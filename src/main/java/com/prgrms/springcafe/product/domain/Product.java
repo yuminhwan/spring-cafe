@@ -2,9 +2,9 @@ package com.prgrms.springcafe.product.domain;
 
 import java.time.LocalDateTime;
 
-import com.prgrms.springcafe.product.domain.vo.Money;
 import com.prgrms.springcafe.product.domain.vo.ProductName;
-import com.prgrms.springcafe.product.domain.vo.Quantity;
+import com.prgrms.springcafe.vo.Money;
+import com.prgrms.springcafe.vo.Quantity;
 
 public class Product {
 

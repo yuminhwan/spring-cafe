@@ -1,4 +1,4 @@
-package com.prgrms.springcafe.product.domain.vo;
+package com.prgrms.springcafe.vo;
 
 import static org.assertj.core.api.Assertions.*;
 

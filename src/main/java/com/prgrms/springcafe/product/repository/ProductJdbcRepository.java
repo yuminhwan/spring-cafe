@@ -18,10 +18,10 @@ import org.springframework.stereotype.Repository;
 
 import com.prgrms.springcafe.product.domain.Category;
 import com.prgrms.springcafe.product.domain.Product;
-import com.prgrms.springcafe.product.domain.vo.Money;
 import com.prgrms.springcafe.product.domain.vo.ProductName;
-import com.prgrms.springcafe.product.domain.vo.Quantity;
 import com.prgrms.springcafe.product.exception.ProductNotFoundException;
+import com.prgrms.springcafe.vo.Money;
+import com.prgrms.springcafe.vo.Quantity;
 
 @Repository
 public class ProductJdbcRepository implements ProductRepostiory {

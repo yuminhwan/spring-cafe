@@ -16,15 +16,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.prgrms.springcafe.product.domain.Product;
-import com.prgrms.springcafe.product.domain.vo.Money;
 import com.prgrms.springcafe.product.domain.vo.ProductName;
-import com.prgrms.springcafe.product.domain.vo.Quantity;
 import com.prgrms.springcafe.product.dto.CreateProductRequest;
 import com.prgrms.springcafe.product.dto.ProductResponse;
 import com.prgrms.springcafe.product.dto.UpdateProductRequest;
 import com.prgrms.springcafe.product.exception.NameDuplicateException;
 import com.prgrms.springcafe.product.exception.ProductNotFoundException;
 import com.prgrms.springcafe.product.repository.ProductRepostiory;
+import com.prgrms.springcafe.vo.Money;
+import com.prgrms.springcafe.vo.Quantity;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {

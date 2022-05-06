@@ -1,4 +1,4 @@
-package com.prgrms.springcafe.product.domain.vo;
+package com.prgrms.springcafe.vo;
 
 import java.util.Objects;
 
@@ -19,6 +19,14 @@ public class Money {
         if (amount < MIN_AMOUNT) {
             throw new InvalidValueException(PRICE_UNDER_MIN_PRICE_EXCEPTION_MESSAGE);
         }
+    }
+
+    public Money add(Money money) {
+        return new Money(this.amount + money.amount);
+    }
+
+    public Money calculateTotal(Quantity quantity) {
+        return new Money(this.amount * quantity.getAmount());
     }
 
     public long getAmount() {
