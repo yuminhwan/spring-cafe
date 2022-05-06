@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.prgrms.springcafe.global.error.exception.BusinessException;
+import com.prgrms.springcafe.product.controller.ProductController;
 
-@ControllerAdvice
+@ControllerAdvice(assignableTypes = {ProductController.class})
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    protected void handleException(HttpServletResponse response, Exception e) throws IOException {
+    public void handleException(HttpServletResponse response, Exception e) throws IOException {
         logger.error(e.getMessage());
         response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버에서 오류가 발생했습니다.");
     }
