@@ -1,5 +1,6 @@
 package com.prgrms.springcafe.order.repository;
 
+import static com.prgrms.springcafe.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Optional;
@@ -14,7 +15,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.prgrms.springcafe.order.domain.OrderItem;
-import com.prgrms.springcafe.vo.Money;
 import com.prgrms.springcafe.vo.Quantity;
 
 @JdbcTest
@@ -75,9 +75,5 @@ class OrderItemJdbcRepositoryTest {
         // then
         assertThatCode(() -> orderItemRepository.deleteById(1L))
             .doesNotThrowAnyException();
-    }
-
-    private OrderItem orderItem() {
-        return new OrderItem(1L, 1L, 1L, new Money(2500), new Quantity(4));
     }
 }

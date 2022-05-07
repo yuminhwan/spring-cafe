@@ -1,5 +1,6 @@
 package com.prgrms.springcafe.order.repository;
 
+import static com.prgrms.springcafe.TestUtils.*;
 import static com.prgrms.springcafe.order.domain.OrderStatus.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -15,13 +16,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.prgrms.springcafe.order.domain.Order;
-import com.prgrms.springcafe.order.domain.OrderItem;
-import com.prgrms.springcafe.order.domain.OrderItems;
-import com.prgrms.springcafe.order.domain.Orderer;
 import com.prgrms.springcafe.order.domain.vo.Address;
 import com.prgrms.springcafe.order.domain.vo.Email;
-import com.prgrms.springcafe.vo.Money;
-import com.prgrms.springcafe.vo.Quantity;
 
 @JdbcTest
 @Sql({"classpath:orderTest.sql"})
@@ -151,20 +147,4 @@ class OrderJdbcRepositoryTest {
             .doesNotThrowAnyException();
     }
 
-    private Order order() {
-        return Order.of(new Orderer(new Email("hwan@gmail.com"), new Address("구미시 옥계동", "12345")), orderItems(),
-            ACCEPTED);
-    }
-
-    private List<Order> orders() {
-        return List.of(
-            Order.of(new Orderer(new Email("hwan@gmail.com"), new Address("구미시 옥계동", "12345")), orderItems(), ACCEPTED),
-            Order.of(new Orderer(new Email("armand@gmail.com"), new Address("구미시 옥계동", "12345")), orderItems(),
-                ACCEPTED));
-    }
-
-    private OrderItems orderItems() {
-        return new OrderItems(List.of(new OrderItem(1L, new Money(1000L), new Quantity(3)),
-            new OrderItem(2L, new Money(2000L), new Quantity(5))));
-    }
 }
