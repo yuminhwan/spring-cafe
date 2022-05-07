@@ -27,13 +27,13 @@ import com.prgrms.springcafe.vo.Money;
 import com.prgrms.springcafe.vo.Quantity;
 
 @ExtendWith(MockitoExtension.class)
-class ProductServiceTest {
+class DefaultProductServiceTest {
 
     @Mock
     private ProductRepostiory productRepostiory;
 
     @InjectMocks
-    private ProductService productService;
+    private DefaultProductService productService;
 
     @DisplayName("상품을 생성한다.")
     @Test

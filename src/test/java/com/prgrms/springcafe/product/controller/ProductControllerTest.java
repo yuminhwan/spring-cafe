@@ -122,7 +122,7 @@ class ProductControllerTest {
             .params(params));
 
         // then
-        resultActions.andExpect(status().isCreated())
+        resultActions.andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/products"));
     }
 
