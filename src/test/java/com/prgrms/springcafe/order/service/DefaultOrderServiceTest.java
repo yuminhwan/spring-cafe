@@ -13,8 +13,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.prgrms.springcafe.order.domain.Order;
 import com.prgrms.springcafe.order.domain.OrderItem;
 import com.prgrms.springcafe.order.domain.OrderItems;
-import com.prgrms.springcafe.order.domain.OrderStatus;
 import com.prgrms.springcafe.order.domain.Orderer;
 import com.prgrms.springcafe.order.domain.vo.Address;
 import com.prgrms.springcafe.order.domain.vo.Email;
@@ -121,20 +118,18 @@ class DefaultOrderServiceTest {
     }
 
     @DisplayName("주문 상태를 변경한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"PAYMENT_CONFIRMED", "READY_FOR_DELIVERY", "SHIPPED", "SETTLED", "CANCELLED"})
-    void changeStatus(OrderStatus orderStatus) {
+    @Test
+    void changeStatus() {
         // given
         Order order = order();
         given(orderRepository.findById(1L)).willReturn(Optional.of(order));
 
         // when
-        orderService.changeStatus(1L, orderStatus);
+        orderService.changeStatus(1L, PAYMENT_CONFIRMED);
 
         // then
         then(orderRepository).should(times(1)).findById(1L);
-        orderStatus.changeStatus(order);
-        then(orderRepository).should(times(1)).updateStatus(order);
+        then(orderRepository).should(times(1)).updateStatus(any(Order.class));
     }
 
     @DisplayName("모든 주문을 찾는다.")

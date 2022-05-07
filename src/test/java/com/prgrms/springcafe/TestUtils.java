@@ -36,7 +36,7 @@ public class TestUtils {
     }
 
     public static OrderItem orderItem() {
-        return new OrderItem(1L, 1L, 1L, new Money(1000L), new Quantity(10));
+        return new OrderItem(1L, 1L, 1L, new Money(2500L), new Quantity(4));
     }
 
 }
