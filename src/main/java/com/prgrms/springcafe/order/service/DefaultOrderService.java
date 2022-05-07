@@ -16,7 +16,7 @@ import com.prgrms.springcafe.order.domain.vo.Email;
 import com.prgrms.springcafe.order.dto.CreateOrderRequest;
 import com.prgrms.springcafe.order.dto.ModifyAddressRequest;
 import com.prgrms.springcafe.order.dto.OrderResponse;
-import com.prgrms.springcafe.order.exception.OrderCanNotCancelException;
+import com.prgrms.springcafe.order.exception.OrderCanNotModifiedException;
 import com.prgrms.springcafe.order.exception.OrderNotFoundException;
 import com.prgrms.springcafe.order.exception.ProductOutOfStockExcpetion;
 import com.prgrms.springcafe.order.repository.OrderRepository;
@@ -79,7 +79,7 @@ public class DefaultOrderService implements OrderService {
 
     private void canModifyAddress(Long id, Order order) {
         if (order.isNotModifiable()) {
-            throw new OrderCanNotCancelException(id);
+            throw new OrderCanNotModifiedException(id);
         }
     }
 

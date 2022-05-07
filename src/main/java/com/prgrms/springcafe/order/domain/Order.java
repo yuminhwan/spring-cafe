@@ -68,7 +68,7 @@ public class Order {
         this.modifiedDateTime = LocalDateTime.now();
     }
 
-    public boolean isNotModifiable() {
+    public boolean isNotPaymentConfirmable() {
         return this.orderStatus != OrderStatus.ACCEPTED;
     }
 
@@ -76,7 +76,7 @@ public class Order {
         return orderStatus != OrderStatus.PAYMENT_CONFIRMED;
     }
 
-    public boolean isNotCancelable() {
+    public boolean isNotModifiable() {
         return orderStatus != OrderStatus.PAYMENT_CONFIRMED && orderStatus != OrderStatus.ACCEPTED;
     }
 

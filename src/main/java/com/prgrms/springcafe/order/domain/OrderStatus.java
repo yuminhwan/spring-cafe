@@ -13,7 +13,7 @@ public enum OrderStatus {
         throw new WrongCommandOrderStatusException();
     }),
     PAYMENT_CONFIRMED(order -> {
-        if (order.isNotModifiable()) {
+        if (order.isNotPaymentConfirmable()) {
             throw new WrongCommandOrderStatusException();
         }
         order.completePayment();
@@ -38,7 +38,7 @@ public enum OrderStatus {
         order.completeDelivery();
     }),
     CANCELLED(order -> {
-        if (order.isNotCancelable()) {
+        if (order.isNotModifiable()) {
             throw new WrongCommandOrderStatusException();
         }
         order.cancel();
