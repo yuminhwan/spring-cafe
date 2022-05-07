@@ -76,6 +76,10 @@ public class Order {
         return orderStatus != OrderStatus.PAYMENT_CONFIRMED;
     }
 
+    public boolean isNotCancelable() {
+        return orderStatus != OrderStatus.PAYMENT_CONFIRMED && orderStatus != OrderStatus.ACCEPTED;
+    }
+
     public boolean isNotShippable() {
         return orderStatus != OrderStatus.READY_FOR_DELIVERY;
     }

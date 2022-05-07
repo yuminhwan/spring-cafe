@@ -34,7 +34,7 @@ public enum OrderStatus {
         order.completeDelivery();
     }),
     CANCELLED(order -> {
-        if (order.isNotModifiable()) {
+        if (order.isNotCancelable()) {
             throw new WrongCommandOrderStatusException();
         }
         order.cancel();
