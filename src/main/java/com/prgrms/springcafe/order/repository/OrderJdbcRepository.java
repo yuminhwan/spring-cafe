@@ -1,9 +1,7 @@
 package com.prgrms.springcafe.order.repository;
 
-import static com.prgrms.springcafe.global.utils.JdbcUtils.*;
 import static java.util.stream.Collectors.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -141,8 +139,8 @@ public class OrderJdbcRepository implements OrderRepository {
         Email email = new Email((String)result.get(0).get("email"));
         Address address = new Address((String)result.get(0).get("address"), (String)result.get(0).get("postcode"));
         OrderStatus orderStatus = OrderStatus.valueOf((String)result.get(0).get("order_status"));
-        LocalDateTime createdDateTime = toLocalDateTime((Timestamp)result.get(0).get("created_at"));
-        LocalDateTime modifiedDateTime = toLocalDateTime((Timestamp)result.get(0).get(("updated_at")));
+        LocalDateTime createdDateTime = (LocalDateTime)result.get(0).get("created_at");
+        LocalDateTime modifiedDateTime = (LocalDateTime)result.get(0).get(("updated_at"));
         OrderItems orderItems = new OrderItems(extractOrderItems(result));
 
         return new Order(orderId, new Orderer(email, address), orderItems, orderStatus, createdDateTime,
