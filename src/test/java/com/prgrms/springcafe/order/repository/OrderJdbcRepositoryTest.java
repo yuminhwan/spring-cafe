@@ -57,7 +57,7 @@ class OrderJdbcRepositoryTest {
     void updateAddress() {
         // given
         Order order = orderRepository.insert(order());
-        Address address = new Address("옥계동", "2345");
+        Address address = new Address("옥계동 흥안로43", "2345");
 
         // when
         order.changeAddress(address);
@@ -135,13 +135,15 @@ class OrderJdbcRepositoryTest {
     }
 
     private Order order() {
-        return Order.of(new Orderer(new Email("hwan@gmail.com"), new Address("구미시", "12345")), orderItems(), ACCEPTED);
+        return Order.of(new Orderer(new Email("hwan@gmail.com"), new Address("구미시 옥계동", "12345")), orderItems(),
+            ACCEPTED);
     }
 
     private List<Order> orders() {
         return List.of(
-            Order.of(new Orderer(new Email("hwan@gmail.com"), new Address("구미시", "12345")), orderItems(), ACCEPTED),
-            Order.of(new Orderer(new Email("armand@gmail.com"), new Address("구미시", "12345")), orderItems(), ACCEPTED));
+            Order.of(new Orderer(new Email("hwan@gmail.com"), new Address("구미시 옥계동", "12345")), orderItems(), ACCEPTED),
+            Order.of(new Orderer(new Email("armand@gmail.com"), new Address("구미시 옥계동", "12345")), orderItems(),
+                ACCEPTED));
     }
 
     private OrderItems orderItems() {

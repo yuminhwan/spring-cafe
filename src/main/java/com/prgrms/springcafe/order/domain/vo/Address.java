@@ -5,7 +5,10 @@ import java.util.Objects;
 import com.prgrms.springcafe.global.error.exception.InvalidValueException;
 
 public class Address {
+
+    private static final int MIN_ADDRESS_LENGTH = 5;
     private static final int MAX_ADDRESS_LENGTH = 100;
+    private static final int MIN_POSTCODE_LENGTH = 3;
     private static final int MAX_POSTCODE_LENGTH = 10;
 
     private final String address;
@@ -23,8 +26,8 @@ public class Address {
             throw new InvalidValueException("우편번호가 비어있습니다.");
         }
 
-        if (postCode.length() > MAX_POSTCODE_LENGTH) {
-            throw new InvalidValueException("우편번호는 10자를 초과할 수 없습니다.");
+        if (postCode.length() > MAX_POSTCODE_LENGTH || postCode.length() < MIN_POSTCODE_LENGTH) {
+            throw new InvalidValueException("우편번호는 3자 미만이거나 10자를 초과할 수 없습니다.");
         }
     }
 
@@ -33,8 +36,8 @@ public class Address {
             throw new InvalidValueException("주소가 비어있습니다.");
         }
 
-        if (address.length() > MAX_ADDRESS_LENGTH) {
-            throw new InvalidValueException("주소는 100자를 초과할 수 없습니다.");
+        if (address.length() > MAX_ADDRESS_LENGTH || address.length() < MIN_ADDRESS_LENGTH) {
+            throw new InvalidValueException("주소는 5자 미만이거나 100자를 초과할 수 없습니다.");
         }
     }
 
