@@ -32,7 +32,16 @@ public class ModifyAddressRequest {
         return address;
     }
 
-    public String getPostCode() {
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPostcode() {
         return postcode;
     }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
 }

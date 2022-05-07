@@ -13,30 +13,31 @@
 </head>
 <body class="container-fluid">
 <h1>Spring Cafe</h1>
-<h2>상품 관리</h2>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-primary me-md-2" th:href="@{/new-product}" type="button">상품 추가</a>
-</div>
+<h2>주문 관리</h2>
 <table class="table table-hover table-striped">
     <thead>
     <tr>
         <th scope="col">아아디</th>
-        <th scope="col">상품명</th>
-        <th scope="col">카테고리</th>
-        <th scope="col">가격</th>
-        <th scope="col">수량</th>
-        <th scope="col">설명</th>
+        <th scope="col">고객 이메일</th>
+        <th scope="col">고객 주소</th>
+        <th scope="col">고객 우편번호</th>
+        <th scope="col">총 가격</th>
+        <th scope="col">상태</th>
+        <th scope="col">생성일</th>
+        <th scope="col">수정일</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="product: ${products}" th:object="${product}"
-        th:onclick="'javascript:rowClicked(\'' + ${product.id} + '\');'">
+    <tr th:each="order: ${orders}" th:object="${order}"
+        th:onclick="'javascript:rowClicked(\'' + ${order.id} + '\');'">
         <td th:text="*{id}"></td>
-        <td th:text="*{name}"></td>
-        <td th:text="*{category}"></td>
-        <td th:text="*{price}"></td>
-        <td th:text="*{stock}"></td>
-        <td th:text="*{description}"></td>
+        <td th:text="*{email}"></td>
+        <td th:text="*{address}"></td>
+        <td th:text="*{postcode}"></td>
+        <td th:text="*{totalMoney}"></td>
+        <td th:text="*{orderStatus}"></td>
+        <td th:text="*{createdDateTime}"></td>
+        <td th:text="*{modifiedDateTime}"></td>
     </tr>
     </tbody>
 </table>
@@ -45,6 +46,6 @@
 
 <script>
     function rowClicked(value) {
-        location.href = "/products/" + value;
+        location.href = "/orders/" + value;
     }
 </script>

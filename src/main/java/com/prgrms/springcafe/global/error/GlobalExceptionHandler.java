@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.prgrms.springcafe.global.error.exception.BusinessException;
+import com.prgrms.springcafe.order.controller.OrderController;
 import com.prgrms.springcafe.product.controller.ProductController;
 
-@ControllerAdvice(assignableTypes = {ProductController.class})
+@ControllerAdvice(assignableTypes = {ProductController.class, OrderController.class})
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
