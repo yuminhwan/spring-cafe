@@ -59,17 +59,29 @@ public class Order {
     }
 
     public void completeDelivery() {
-        this.orderStatus = OrderStatus.SETTLED;
+        this.orderStatus = OrderStatus.DELIVERED;
         this.modifiedDateTime = LocalDateTime.now();
     }
 
-    public void cancelOrder() {
+    public void cancel() {
         this.orderStatus = OrderStatus.CANCELLED;
         this.modifiedDateTime = LocalDateTime.now();
     }
 
-    public boolean isReadyForDelivery() {
-        return this.orderStatus == OrderStatus.READY_FOR_DELIVERY;
+    public boolean isNotModifiable() {
+        return this.orderStatus != OrderStatus.ACCEPTED;
+    }
+
+    public boolean isNotDeliverable() {
+        return orderStatus != OrderStatus.PAYMENT_CONFIRMED;
+    }
+
+    public boolean isNotShippable() {
+        return orderStatus != OrderStatus.READY_FOR_DELIVERY;
+    }
+
+    public boolean isNotDeliveryCompletable() {
+        return orderStatus != OrderStatus.SHIPPED;
     }
 
     public Long getId() {

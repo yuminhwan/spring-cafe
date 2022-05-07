@@ -16,8 +16,11 @@ import com.prgrms.springcafe.vo.Quantity;
 public class TestUtils {
 
     public static Order order() {
-        return Order.of(new Orderer(new Email("hwan@gmail.com"), new Address("구미시 옥계동", "12345")), orderItems(),
-            ACCEPTED);
+        return Order.of(orderer(), orderItems(), ACCEPTED);
+    }
+
+    public static Orderer orderer() {
+        return new Orderer(new Email("hwan@gmail.com"), new Address("구미시 옥계동", "12345"));
     }
 
     public static List<Order> orders() {
