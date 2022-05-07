@@ -2,8 +2,12 @@ package com.prgrms.springcafe.order.domain;
 
 import java.util.function.Consumer;
 
+import com.prgrms.springcafe.order.exception.WrongCommandOrderStatusException;
+
 public enum OrderStatus {
-    ACCEPTED(null),
+    ACCEPTED(order -> {
+        throw new WrongCommandOrderStatusException();
+    }),
     PAYMENT_CONFIRMED(Order::completePayment),
     READY_FOR_DELIVERY(Order::readyForDelivery),
     SHIPPED(Order::startDelivery),

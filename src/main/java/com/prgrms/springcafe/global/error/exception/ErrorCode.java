@@ -1,10 +1,16 @@
 package com.prgrms.springcafe.global.error.exception;
 
 public enum ErrorCode {
+
+    //Common
     INVALID_INPUT_VALUE(400, "잘못된 값 입력입니다."),
     ENTITY_NOT_FOUND(404, "엔티티를 찾을 수 없습니다."),
 
-    NAME_DUPLICATION(400, "상품 이름이 중복됩니다.");
+    // Product
+    NAME_DUPLICATION(400, "상품 이름이 중복됩니다."),
+
+    // Order
+    WRONG_COMMAND_ORDER_STATUS(400, "잘못된 주문 상태 변경입니다.");
 
     private final int status;
     private final String message;
