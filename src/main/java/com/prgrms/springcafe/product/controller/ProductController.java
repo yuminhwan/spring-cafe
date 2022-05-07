@@ -31,14 +31,14 @@ public class ProductController {
     public String showProductsPage(Model model) {
         List<ProductResponse> products = productService.findAllProducts();
         model.addAttribute("products", products);
-        return "product-list";
+        return "product/product-list";
     }
 
     @GetMapping("/new-product")
     public String newProductPage(Model model) {
         model.addAttribute("categorys", Category.toStringAll());
         model.addAttribute("product", new CreateProductRequest());
-        return "new-product";
+        return "product/new-product";
     }
 
     @PostMapping("/products")
@@ -47,7 +47,7 @@ public class ProductController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("categorys", Category.toStringAll());
-            return "new-product";
+            return "product/new-product";
         }
 
         productService.createProduct(productRequest);
@@ -58,14 +58,14 @@ public class ProductController {
     public String showProductDetails(@PathVariable("productId") Long productId, Model model) {
         ProductResponse productResponse = productService.findById(productId);
         model.addAttribute("product", productResponse);
-        return "product-details";
+        return "product/product-details";
     }
 
     @PostMapping("/products/{productId}")
     public String showModifyPage(@ModelAttribute("product") UpdateProductRequest productRequest,
         @ModelAttribute("productId") @PathVariable Long productId) {
 
-        return "modify-product";
+        return "product/modify-product";
     }
 
     @PostMapping("/products/modify/{productId}")
@@ -73,7 +73,7 @@ public class ProductController {
         @ModelAttribute("product") @Valid UpdateProductRequest productRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "modify-product";
+            return "product/modify-product";
         }
 
         productService.modifyProduct(productId, productRequest);

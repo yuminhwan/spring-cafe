@@ -47,7 +47,7 @@ class ProductControllerTest {
         // then
         resultActions.andExpect(status().isOk())
             .andExpect(model().attribute("products", products))
-            .andExpect(view().name("product-list"));
+            .andExpect(view().name("product/product-list"));
     }
 
     @DisplayName("id로 상품을 조회한다.")
@@ -63,7 +63,7 @@ class ProductControllerTest {
         // then
         resultActions.andExpect(status().isOk())
             .andExpect(model().attribute("product", product))
-            .andExpect(view().name("product-details"));
+            .andExpect(view().name("product/product-details"));
     }
 
     @DisplayName("저장되지 않은 id로 조회할 시 에러페이지로 이동한다.")
