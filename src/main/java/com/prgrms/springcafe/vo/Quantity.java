@@ -22,8 +22,12 @@ public class Quantity {
         }
     }
 
-    public Quantity minusQuantity(int sellAmount) {
-        return new Quantity(this.amount - sellAmount);
+    public Quantity minusQuantity(Quantity quantity) {
+        return new Quantity(this.amount - quantity.amount);
+    }
+
+    public boolean isUnder(Quantity quantity) {
+        return this.amount < quantity.getAmount();
     }
 
     public int getAmount() {

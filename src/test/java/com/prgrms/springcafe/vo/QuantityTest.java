@@ -16,10 +16,9 @@ class QuantityTest {
     void should_ReturnMinusQuantity() {
         // given
         Quantity quantity = new Quantity(20);
-        int sellAmount = 10;
 
         // when
-        Quantity result = quantity.minusQuantity(sellAmount);
+        Quantity result = quantity.minusQuantity(new Quantity(10));
 
         // then
         assertThat(result.getAmount()).isEqualTo(10);

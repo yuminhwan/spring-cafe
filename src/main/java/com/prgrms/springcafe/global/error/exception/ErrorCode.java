@@ -10,6 +10,7 @@ public enum ErrorCode {
     NAME_DUPLICATION(400, "상품 이름이 중복됩니다."),
 
     // Order
+    ORDER_CAN_NOT_CANCEL(400, "해당 주문은 취소할 수 없습니다."),
     WRONG_COMMAND_ORDER_STATUS(400, "잘못된 주문 상태 변경입니다.");
 
     private final int status;

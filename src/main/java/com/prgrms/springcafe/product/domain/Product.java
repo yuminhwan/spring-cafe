@@ -37,8 +37,8 @@ public class Product {
         this.modifiedDateTime = modifiedDateTime;
     }
 
-    public void sellProduct(int sellQuantity) {
-        this.stock = stock.minusQuantity(sellQuantity);
+    public void sellProduct(Quantity quantity) {
+        this.stock = stock.minusQuantity(quantity);
     }
 
     public boolean isNotSameName(String name) {
@@ -50,6 +50,10 @@ public class Product {
         this.stock = new Quantity(stock);
         this.description = description;
         this.modifiedDateTime = LocalDateTime.now();
+    }
+
+    public boolean isNotSellable(Quantity quantity) {
+        return this.stock.isUnder(quantity);
     }
 
     public Long getId() {
