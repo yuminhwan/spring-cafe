@@ -13,12 +13,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.test.context.jdbc.Sql;
 
 import com.prgrms.springcafe.product.domain.Category;
 import com.prgrms.springcafe.product.domain.Product;
 import com.prgrms.springcafe.product.exception.ProductNotFoundException;
 
 @JdbcTest
+@Sql({"classpath:productTest.sql"})
 class ProductJdbcRepositoryTest {
 
     @Autowired
