@@ -12,6 +12,10 @@ public class OrderItem {
     private Quantity quantity;
     private Money totalPrice;
 
+    public OrderItem(Long productId, long price, int quantity) {
+        this(null, null, productId, new Money(price), new Quantity(quantity));
+    }
+
     public OrderItem(Long productId, Money price, Quantity quantity) {
         this(null, null, productId, price, quantity);
     }

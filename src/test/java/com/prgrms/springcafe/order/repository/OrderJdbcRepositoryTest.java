@@ -70,6 +70,23 @@ class OrderJdbcRepositoryTest {
         assertThat(findOrder.get().getModifiedDateTime()).isNotEqualTo(order.getModifiedDateTime());
     }
 
+    @DisplayName("주문 상태를 수정한다.")
+    @Test
+    void updateStatus() {
+        // given
+        Order order = orderRepository.insert(order());
+
+        // when
+        order.readyForDelivery();
+        orderRepository.updateStatus(order);
+
+        // then
+        Optional<Order> findOrder = orderRepository.findById(1L);
+        assertThat(findOrder).isNotEmpty()
+            .get().extracting("orderStatus")
+            .isEqualTo(READY_FOR_DELIVERY);
+    }
+
     @DisplayName("전체 주문을 조회한다.")
     @Test
     void findAll() {

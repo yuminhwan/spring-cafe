@@ -178,6 +178,17 @@ public class OrderJdbcRepository implements OrderRepository {
         }
     }
 
+    @Override
+    public void updateStatus(Order order) {
+        int updateCnt = jdbcTemplate.update(
+            "UPDATE `order` SET order_status = :orderStatus WHERE order_id = :orderId",
+            toOrderParameterSource(order));
+
+        if (updateCnt != EXECUTE_VALUE) {
+            throw new OrderItemNotFoundException(order.getId());
+        }
+    }
+
     private SqlParameterSource toOrderParameterSource(Order order) {
         return new MapSqlParameterSource()
             .addValue("orderId", order.getId())
