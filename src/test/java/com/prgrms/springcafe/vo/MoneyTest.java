@@ -23,13 +23,13 @@ class MoneyTest {
         assertThat(money.getAmount()).isEqualTo(amount);
     }
 
-    @DisplayName("가격은 1미만이면 안된다.")
+    @DisplayName("가격은 0미만이면 안된다.")
     @ParameterizedTest
-    @ValueSource(longs = {-1, -100, -12, 0})
+    @ValueSource(longs = {-1, -100, -12})
     void should_ThrowException_MoneyIsUnderOne(long money) {
         assertThatThrownBy(() -> new Money(money))
             .isInstanceOf(InvalidValueException.class)
-            .hasMessage("돈은 1보다 작을 수 없습니다.");
+            .hasMessage("돈은 0보다 작을 수 없습니다.");
     }
 
     @DisplayName("수량을 받아 총 돈을 계산한다.")

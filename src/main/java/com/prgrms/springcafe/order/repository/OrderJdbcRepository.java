@@ -2,6 +2,7 @@ package com.prgrms.springcafe.order.repository;
 
 import static java.util.stream.Collectors.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.prgrms.springcafe.global.utils.JdbcUtils;
 import com.prgrms.springcafe.order.domain.Order;
 import com.prgrms.springcafe.order.domain.OrderItem;
 import com.prgrms.springcafe.order.domain.OrderItems;
@@ -139,8 +141,8 @@ public class OrderJdbcRepository implements OrderRepository {
         Email email = new Email((String)result.get(0).get("email"));
         Address address = new Address((String)result.get(0).get("address"), (String)result.get(0).get("postcode"));
         OrderStatus orderStatus = OrderStatus.valueOf((String)result.get(0).get("order_status"));
-        LocalDateTime createdDateTime = (LocalDateTime)result.get(0).get("created_at");
-        LocalDateTime modifiedDateTime = (LocalDateTime)result.get(0).get(("updated_at"));
+        LocalDateTime createdDateTime = JdbcUtils.toLocalDateTime((Timestamp)result.get(0).get("created_at"));
+        LocalDateTime modifiedDateTime = JdbcUtils.toLocalDateTime((Timestamp)result.get(0).get(("updated_at")));
         OrderItems orderItems = new OrderItems(extractOrderItems(result));
 
         return new Order(orderId, new Orderer(email, address), orderItems, orderStatus, createdDateTime,
