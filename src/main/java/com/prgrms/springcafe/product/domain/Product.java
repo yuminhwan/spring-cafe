@@ -38,7 +38,11 @@ public class Product {
     }
 
     public void sellProduct(Quantity quantity) {
-        this.stock = stock.minusQuantity(quantity);
+        this.stock = stock.minus(quantity);
+    }
+
+    public void plusProduct(Quantity quantity) {
+        this.stock = stock.plus(quantity);
     }
 
     public boolean isNotSameName(String name) {

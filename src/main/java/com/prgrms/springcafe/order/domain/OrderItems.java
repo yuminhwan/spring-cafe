@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.prgrms.springcafe.global.error.exception.InvalidValueException;
+import com.prgrms.springcafe.order.exception.OrderItemNotFoundException;
 import com.prgrms.springcafe.vo.Money;
 import com.prgrms.springcafe.vo.Quantity;
 
@@ -35,7 +36,18 @@ public class OrderItems {
             .collect(Collectors.toMap(OrderItem::getProductId, OrderItem::getQuantity));
     }
 
+    public OrderItem findOrderItem(Long id) {
+        return orderItems.stream()
+            .filter(orderItem -> orderItem.isSameId(id))
+            .findFirst()
+            .orElseThrow(() -> new OrderItemNotFoundException(id));
+    }
+
     public List<OrderItem> getOrderItems() {
         return List.copyOf(orderItems);
+    }
+
+    public int size() {
+        return orderItems.size();
     }
 }

@@ -34,6 +34,14 @@ public class OrderItem {
         this.totalPrice = price.calculateTotal(quantity);
     }
 
+    public boolean isLowerQuantity(Quantity quantity) {
+        return this.quantity.isUnder(quantity);
+    }
+
+    public boolean isSameId(Long id) {
+        return this.id.equals(id);
+    }
+
     public Long getId() {
         return id;
     }

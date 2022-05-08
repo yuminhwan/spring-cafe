@@ -22,12 +22,20 @@ public class Quantity {
         }
     }
 
-    public Quantity minusQuantity(Quantity quantity) {
+    public Quantity plus(Quantity quantity) {
+        return new Quantity(this.amount + quantity.amount);
+    }
+
+    public Quantity minus(Quantity quantity) {
         return new Quantity(this.amount - quantity.amount);
     }
 
     public boolean isUnder(Quantity quantity) {
         return this.amount < quantity.getAmount();
+    }
+
+    public boolean isZero() {
+        return this.amount == 0;
     }
 
     public int getAmount() {

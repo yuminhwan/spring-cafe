@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.prgrms.springcafe.order.domain.Order;
+import com.prgrms.springcafe.order.domain.OrderItem;
 import com.prgrms.springcafe.order.domain.OrderItems;
 import com.prgrms.springcafe.order.domain.OrderStatus;
 import com.prgrms.springcafe.order.domain.vo.Email;
@@ -30,10 +31,13 @@ import com.prgrms.springcafe.vo.Quantity;
 public class DefaultOrderService implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderItemService orderItemService;
     private final ProductRepostiory productRepostiory;
 
-    public DefaultOrderService(OrderRepository orderRepository, ProductRepostiory productRepostiory) {
+    public DefaultOrderService(OrderRepository orderRepository, OrderItemService orderItemService,
+        ProductRepostiory productRepostiory) {
         this.orderRepository = orderRepository;
+        this.orderItemService = orderItemService;
         this.productRepostiory = productRepostiory;
     }
 
@@ -50,11 +54,10 @@ public class DefaultOrderService implements OrderService {
         OrderItems orderItems = order.getOrderItems();
         Map<Long, Quantity> quantityMap = orderItems.mapToProductAndQuantity();
         for (Long productId : quantityMap.keySet()) {
-            Product product = productRepostiory.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException(productId));
+            Product product = findProduct(productId);
 
             Quantity soldQuantity = quantityMap.get(productId);
-            validateProduct(productId, product, soldQuantity);
+            validateProduct(product, soldQuantity);
 
             product.sellProduct(soldQuantity);
             productRepostiory.update(product);
@@ -62,25 +65,79 @@ public class DefaultOrderService implements OrderService {
 
     }
 
-    private void validateProduct(Long productId, Product product, Quantity soldQuantity) {
+    private void validateProduct(Product product, Quantity soldQuantity) {
         if (product.isNotSellable(soldQuantity)) {
-            throw new ProductOutOfStockExcpetion(productId);
+            throw new ProductOutOfStockExcpetion(product.getId());
         }
     }
 
     @Override
     public void changeAddress(Long id, ModifyAddressRequest addressRequest) {
         Order order = findOrder(id);
-        canModifyAddress(id, order);
+        validateModifiable(order);
 
         order.changeAddress(addressRequest.toEntity());
         orderRepository.updateAddress(order);
     }
 
-    private void canModifyAddress(Long id, Order order) {
-        if (order.isNotModifiable()) {
-            throw new OrderCanNotModifiedException(id);
+    @Override
+    public void changeOrderItem(Long orderId, Long orderItemId, Quantity quantity) {
+        Order order = findOrder(orderId);
+        validateModifiable(order);
+
+        OrderItem orderItem = order.getOrderItems().findOrderItem(orderItemId);
+        Product product = findProduct(orderItem.getProductId());
+
+        updateProduct(quantity, orderItem, product);
+
+        if (quantity.isZero()) {
+            removeOrderItem(orderId, orderItemId);
+            return;
         }
+        orderItemService.changeOrderItem(orderItem.getId(), quantity);
+    }
+
+    private void validateModifiable(Order order) {
+        if (order.isNotModifiable()) {
+            throw new OrderCanNotModifiedException(order.getId());
+        }
+    }
+
+    private void updateProduct(Quantity quantity, OrderItem orderItem, Product product) {
+        if (orderItem.isLowerQuantity(quantity)) {
+            Quantity update = quantity.minus(orderItem.getQuantity());
+            validateProduct(product, update);
+            product.sellProduct(update);
+            productRepostiory.update(product);
+            return;
+        }
+        Quantity update = orderItem.getQuantity().minus(quantity);
+        product.plusProduct(update);
+        productRepostiory.update(product);
+    }
+
+    @Override
+    public void removeOrderItem(Long orderId, Long orderItemId) {
+        Order order = findOrder(orderId);
+        validateModifiable(order);
+        OrderItem orderItem = order.getOrderItems().findOrderItem(orderItemId);
+
+        Product product = findProduct(orderItem.getProductId());
+        product.plusProduct(orderItem.getQuantity());
+        productRepostiory.update(product);
+
+        if (order.hasOneItem()) {
+            order.cancel();
+            changeStatus(orderId, order.getOrderStatus());
+            return;
+        }
+
+        orderItemService.removeOrderItem(orderItemId);
+    }
+
+    private Product findProduct(Long orderItem) {
+        return productRepostiory.findById(orderItem)
+            .orElseThrow(() -> new ProductNotFoundException(orderItem));
     }
 
     @Override

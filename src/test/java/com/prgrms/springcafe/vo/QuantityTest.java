@@ -18,7 +18,7 @@ class QuantityTest {
         Quantity quantity = new Quantity(20);
 
         // when
-        Quantity result = quantity.minusQuantity(new Quantity(10));
+        Quantity result = quantity.minus(new Quantity(10));
 
         // then
         assertThat(result.getAmount()).isEqualTo(10);

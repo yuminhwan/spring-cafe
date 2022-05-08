@@ -115,4 +115,8 @@ public class Order {
     public LocalDateTime getModifiedDateTime() {
         return modifiedDateTime;
     }
+
+    public boolean hasOneItem() {
+        return orderItems.size() == 1;
+    }
 }
