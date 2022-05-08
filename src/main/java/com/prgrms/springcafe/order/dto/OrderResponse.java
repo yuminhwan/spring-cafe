@@ -14,20 +14,20 @@ public class OrderResponse {
     private final String address;
     private final String postcode;
     private final OrderStatus orderStatus;
-    private final List<OrderItemResponse> orderItemResponses;
+    private final List<OrderItemResponse> orderItems;
     private final long totalMoney;
     private final LocalDateTime createdDateTime;
     private final LocalDateTime modifiedDateTime;
 
     public OrderResponse(Long id, String email, String address, String postcode, OrderStatus orderStatus,
-        List<OrderItemResponse> orderItemResponses, long totalMoney, LocalDateTime createdDateTime,
+        List<OrderItemResponse> orderItems, long totalMoney, LocalDateTime createdDateTime,
         LocalDateTime modifiedDateTime) {
         this.id = id;
         this.email = email;
         this.address = address;
         this.postcode = postcode;
         this.orderStatus = orderStatus;
-        this.orderItemResponses = orderItemResponses;
+        this.orderItems = orderItems;
         this.totalMoney = totalMoney;
         this.createdDateTime = createdDateTime;
         this.modifiedDateTime = modifiedDateTime;
@@ -75,8 +75,8 @@ public class OrderResponse {
         return orderStatus;
     }
 
-    public List<OrderItemResponse> getOrderItemResponses() {
-        return orderItemResponses;
+    public List<OrderItemResponse> getOrderItems() {
+        return orderItems;
     }
 
     public long getTotalMoney() {
