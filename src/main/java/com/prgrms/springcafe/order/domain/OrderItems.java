@@ -3,6 +3,7 @@ package com.prgrms.springcafe.order.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.prgrms.springcafe.global.error.exception.InvalidValueException;
@@ -19,7 +20,7 @@ public class OrderItems {
     }
 
     private void validateOrderItems(List<OrderItem> orderItems) {
-        if (orderItems.isEmpty()) {
+        if (Objects.isNull(orderItems) || orderItems.isEmpty()) {
             throw new InvalidValueException("주문 상품은 비어있을 수 없습니다.");
         }
     }
