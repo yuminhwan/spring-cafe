@@ -30,7 +30,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="orderItem: ${order.orderItemResponses}" th:object="${orderItem}">
+    <tr th:each="orderItem: ${order.orderItems}" th:object="${orderItem}">
         <td th:text="*{id}"></td>
         <td th:text="*{orderId}"></td>
         <td th:text="*{price}"></td>
