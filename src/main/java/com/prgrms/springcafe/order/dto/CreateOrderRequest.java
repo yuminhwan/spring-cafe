@@ -26,28 +26,28 @@ public class CreateOrderRequest {
 
     @NotEmpty(message = "우편번호는 공백만 있을 수 없습니다.")
     @Length(min = 3, max = 10, message = "우변번호는 {min}글자 이상 {max}글자 이하여야합니다.")
-    private String postCode;
+    private String postcode;
 
     @NotNull(message = "주문 상품들은 비어있을 수 없습니다.")
-    private List<CreateOrderItemRequest> orderItemRequests;
+    private List<CreateOrderItemRequest> orderItems;
 
     public CreateOrderRequest() {
     }
 
-    public CreateOrderRequest(String email, String address, String postCode,
-        List<CreateOrderItemRequest> orderItemRequests) {
+    public CreateOrderRequest(String email, String address, String postcode,
+        List<CreateOrderItemRequest> orderItems) {
         this.email = email;
         this.address = address;
-        this.postCode = postCode;
-        this.orderItemRequests = orderItemRequests;
+        this.postcode = postcode;
+        this.orderItems = orderItems;
     }
 
     public Order toEntity() {
-        return Order.of(email, address, postCode, orderItems(), ACCEPTED);
+        return Order.of(email, address, postcode, orderItems(), ACCEPTED);
     }
 
     private List<OrderItem> orderItems() {
-        return orderItemRequests.stream()
+        return orderItems.stream()
             .map(CreateOrderItemRequest::toEntity)
             .collect(toList());
     }
@@ -60,11 +60,12 @@ public class CreateOrderRequest {
         return address;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public List<CreateOrderItemRequest> getOrderItemRequests() {
-        return orderItemRequests;
+    public List<CreateOrderItemRequest> getOrderItems() {
+        return orderItems;
     }
+
 }

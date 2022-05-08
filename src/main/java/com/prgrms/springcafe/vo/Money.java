@@ -5,8 +5,8 @@ import java.util.Objects;
 import com.prgrms.springcafe.global.error.exception.InvalidValueException;
 
 public class Money {
-    public static final int MIN_AMOUNT = 1;
-    public static final String PRICE_UNDER_MIN_PRICE_EXCEPTION_MESSAGE = "돈은 1보다 작을 수 없습니다.";
+    public static final int MIN_AMOUNT = 0;
+    public static final String PRICE_UNDER_MIN_PRICE_EXCEPTION_MESSAGE = "돈은 0보다 작을 수 없습니다.";
 
     private final long amount;
 
